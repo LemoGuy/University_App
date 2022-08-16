@@ -1,0 +1,45 @@
+
+<% if(role.can("create" , "Student" )) { %>
+    <a href="/addStudent">Add Student</a>
+<% } %>
+<br><br>
+
+<% if(role.can("create" , "Lecturer" )) { %>
+    <a href="/addLecturer">Add Lecturer</a>
+<% } %>
+<br><br>
+
+<% if(role.can("create" , "HeadOfDepartment" )) { %>
+    <a href="/addHeadOfDepartment">Add Head Of Department</a>
+<% } %>
+
+<br><br>
+
+<% if(role.can("create" , "HRManager" )) { %>
+    <a href="/addHRManager">Add HR Manager</a>
+<% } %>
+<br><br>
+
+
+<% if(role.can("create" , "StudentAffairs" )) { %>
+    <a href="/addStudentAffairs">Add Student Affairs</a>
+<% } %>
+
+<br><br>
+
+<% if(role.can("create" , "Course" )) { %>
+    <a href="/addCourse">Add Course</a>
+<% } %>
+<br><br>
+
+
+<% if(role.can("create" , "Admin" )) { %>
+    <a href="/addAdmin">Add Admin</a>
+<% } %>
+
+<br><br>
+
+
+
+
+        <a href="/logout">Logout</a>

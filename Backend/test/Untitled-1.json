@@ -1,0 +1,30 @@
+{
+    "name": ["String"],
+
+    "gender": "String",
+
+    "birthdate": "{String}",
+    
+    "userCreationDate": "date",
+
+    "username": "String",
+    
+    "password": "String",
+
+    
+    "email":"String",
+    
+
+    "status": "String",
+
+    "department": "ce",
+
+    "year": 2002,
+
+    "semester": "fALL",
+
+    "section": "String",
+    "assignedCourses":[]
+
+}
+
