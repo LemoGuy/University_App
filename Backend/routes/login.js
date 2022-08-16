@@ -1,21 +1,31 @@
 const express = require('express');
-const router = express.Router(); 
-const passport = require('passport');
-const { ensureAuthenticated, forwardAuthenticated } = require('../config/auth');
-
-
-// router.get('/', forwardAuthenticated, (req, res) => res.render('login.ejs'));
+const router = express.Router();
+const User = require('../models/User');
+let jwt = require('jsonwebtoken');
+let crypto = require('crypto');
+const bcrypt = require('bcryptjs')
 
 // Login
-router.post('/', (req, res, next) => {
+router.post('/', async(req, res) => {
   // console.log(req.body);
+  let user = await User.findOne({ "username": req.body.username })
+  if (!user) {
+    res.sendStatus(404)
+    return
+  }
 
-    passport.authenticate('local', {
-      successRedirect: '/dashboard',
-      failureRedirect: '/',
-      failureFlash: true
-    })(req, res, next);
-  });
- 
+  if (!await bcrypt.compare(req.body.password, user.password)) {
+    res.sendStatus(404)
+    return
+  }
+  
+  let token = jwt.sign({
+    "sub": user.username,
+    "role": user.__t
+    // "exp": (new Date()).getTime() + 3600
+  }, "1234567890")
+  res.send({ token })
+});
+
 
 module.exports = router;

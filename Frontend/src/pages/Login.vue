@@ -1,115 +1,67 @@
 <script setup>
 
-import { useStorage } from '../../Hooks/useStorage';
+import {token, setToken} from '../services/token'
 
-const [token, setToken] = useStorage('token', "local"); 
+import { ref } from 'vue'
+import backend from '../services/backend'
+import resIsOk from '../utils/resIsOk'
+import {useRouter} from 'vue-router'
 
-setToken('abuka');
+const router = useRouter()
+if (token.value){
+  router.push({path: '/dashboard'})
+}
 
+let credentials = ref({})
+
+async function submit() {
+  let res = await backend.post('/login', credentials.value)
+  if(!resIsOk(res)){
+    // error message
+    return 
+  }
+  setToken(res.data.token)
+  console.log(token)
+  router.push('/dashboard')
+}
 </script>
 
 <template>
+  <div class="login-form">
+    <q-card class="input-container">
+      <img class='login-image' src="/images/logo.webp" alt="no pic">
+      <q-input class='username' label="Username" v-model="credentials.username" />
+      <q-input class='password' label="Password" v-model="credentials.password" />
+      <q-btn class="login-btn" @click="submit()">Login</q-btn>
+    </q-card>
 
-  <form action="/login" method="POST">
-    <div class="imgcontainer">
-        <h3>Login Form</h3>
-        <img src="/images/sa.png" alt="Avatar" class="avatar">
-    </div>
-
-    <div class="container">
-      <label for="uname"><b>Username</b></label>
-      <input type="text" placeholder="Enter Username" name="username" required>
-
-      <label for="psw"><b>Password</b></label>
-      <input type="password" placeholder="Enter Password" name="password" required>
-
-      <button type="submit">Login</button>
-      <label>
-        <input type="checkbox"  name="remember"> Remember me
-      </label>
-      <span class="psw">Forgot <a href="#">password?</a></span>
-    </div>
-
-    
-     
-  </form>
+  </div>
 
 </template>
 
 <style scoped>
+.login-form {
+  display: flex;
+  flex-direction: column;
+}
 
-    body {
-      font-family: Arial, Helvetica, sans-serif;
-      display: flex;
-      flex-direction: column;
-    }
+.input-container {
+  gap: 20px;
+  padding: 25px;
+  flex-direction: column;
+  display: flex;
+  width: 400px;
+  margin: auto;
+  margin-top: 25px;
+}
 
-    form {
-      max-width:500px;
-      border: 3px solid #f1f1f1;
-      width: 100%;
-      margin-inline: auto;
+.login-btn {
+  width: 75px;
+  margin-left: auto;
+}
 
-    }
-
-    input[type=text],
-    input[type=password] {
-      width: 100%;
-      padding: 12px 20px;
-      margin: 8px 0;
-      display: inline-block;
-      border: 1px solid #ccc;
-      box-sizing: border-box;
-    }
-
-    button {
-      background-color: #0765b8;
-      color: white;
-      padding: 14px 20px;
-      margin: 8px 0;
-      border: none;
-      cursor: pointer;
-      width: 100%;
-    }
-
-    button:hover {
-      opacity: 0.8;
-    }
-
-    .cancelbtn {
-      width: auto;
-      padding: 10px 18px;
-      background-color: #f44336;
-    }
-
-    .imgcontainer {
-      text-align: center;
-    }
-
-    img.avatar {
-      width: 150px;
-      height: auto;
-    }
-
-    .container {
-      padding: 8px;
-    }
-
-    span.psw {
-      float: right;
-      max-width: 300px
-    }
-
-    /* Change styles for span and cancel button on extra small screens */
-    @media screen and (max-width: 300px) {
-      span.psw {
-        display: block;
-        float: none;
-      }
-
-    }
-
-    h3 {
-      text-align: center;
-    }
-  </style>
+.login-image {
+  width: 400px;
+  margin-inline: auto;
+}
+</style>

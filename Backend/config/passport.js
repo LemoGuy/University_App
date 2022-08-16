@@ -1,40 +1,22 @@
-const LocalStrategy = require('passport-local').Strategy;
-const bcrypt = require('bcryptjs');
-
-// Load User model
+const passport = require('passport');
 const User = require('../models/User');
+const JwtStrategy = require('passport-jwt').Strategy;
+const ExtractJwt = require('passport-jwt').ExtractJwt;
 
-module.exports = function(passport) {
-  passport.use(
-    new LocalStrategy({ usernameField: 'username' }, (username, password,  done) => {
-      // Match user
-      User.findOne({
-        username: username
-      }).then(user => {
-        if (!user) {
-          return done(null, false, { message: 'That email is not registered' });
-        }
-        // Match password
-        bcrypt.compare(password, user.password, (err, isMatch) => {
-          // console.log(isMatch)
-          if (err) throw err;
-          if (isMatch) {
-            return done(null, user);
-          } else {
-            return done(null, false, { message: 'Password incorrect' });
-          }
-        });
-      });
-    })
-  );
+let opts = {}
 
-  passport.serializeUser(function(user, done) {
-    done(null, user.id);
+opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
+opts.secretOrKey = '1234567890';
+
+passport.use(new JwtStrategy(opts, function (jwt_payload, done) {
+  User.findOne({ username: jwt_payload.sub }, function (err, user) {
+    if (err) {
+      return done(err, false);
+    }
+    if (user) {
+      return done(null, user);
+    } else {
+      return done(null, false);
+    }
   });
-
-  passport.deserializeUser(function(id, done) {
-    User.findById(id, function(err, user) {
-      done(err, user);
-    });
-  });
-}; 
+}));

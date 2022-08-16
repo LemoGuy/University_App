@@ -4,12 +4,12 @@ const passport = require('passport');
 const flash = require('connect-flash');
 const session = require('express-session');
 const favicon = require('serve-favicon');
-
+const cors = require('cors')
 const app = express();
 app.use(express.json())
 
 // Passport Config
-require('./config/passport')(passport);
+require('./config/passport');
 
 // DB Config
 const db = require('./config/keys').mongoURI;
@@ -23,6 +23,7 @@ mongoose
   .then(() => console.log('MongoDB Connected'))
   .catch(err => console.log(err));
 
+  app.use(cors())
 // Images
 app.use( express.static( "public" ) );
 // app.use(favicon(__dirname + '/public/images/favicon.ico'));
@@ -72,7 +73,13 @@ app.use(function(req, res, next) {
 // Routes
 app.get('/', (req, res) => res.redirect('/login'));
 app.use('/login', require('./routes/login.js'));
-// app.use('/register', require('./routes/register.js'));
+app.use('/register', require('./routes/register.js'));
+
+app.get('/test', passport.authenticate('jwt', {session: false}), (req, res) => {
+
+
+  res.send('you are logged in')
+})
 
 // app.use('/addStudent', require('./routes/addStudent.js'));
 // app.use('/addLecturer', require('./routes/addLecturer.js'));
