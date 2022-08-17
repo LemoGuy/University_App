@@ -1,5 +1,8 @@
 <script setup>
 
+// TODO! When logining in, press enter instead of clicking login btn..
+
+
 import {token, setToken} from '../services/token'
 
 import { ref } from 'vue'
@@ -21,7 +24,6 @@ async function submit() {
     return 
   }
   setToken(res.data.token)
-  console.log(token)
   router.push('/dashboard')
 }
 </script>
