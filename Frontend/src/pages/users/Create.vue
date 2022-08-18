@@ -4,11 +4,14 @@ import Layout from '@/components/Layout.vue'
 
 const data = ref({})
 const userOptions = [
-    { id: 'HeadOfDepartment', desc: 'Head of Department' },
-    { id: 'HRManager', desc: 'Human resources manager' },
-    { id: 'StudentAffiers', desc: 'Student affiers worker' },
+    { id: 'Student', desc: 'Student' },
     { id: 'Lecturer', desc: 'Leacturer' },
-    { id: 'Student', desc: 'Student' }
+    { id: 'HeadOfDepartment', desc: 'Head of Department' },
+    { id: 'Dean', desc: 'Dean of Faculty' },
+    { id: 'HRManager', desc: 'HR Manager' },
+    { id: 'StudentAffiers', desc: 'Student Affiers' },
+    
+    
 ]
 
 const genders = [

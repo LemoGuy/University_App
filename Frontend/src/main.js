@@ -10,10 +10,14 @@ import { Quasar } from 'quasar'
 import 'quasar/src/css/index.sass'
 import '@quasar/extras/material-icons/material-icons.css'
 
-import {token, setToken} from './services/token'
+import { token, setToken } from './services/token'
 
 const routes = [
-    { path: '/', component: Dashboard },
+    {
+        path: '/', component: Dashboard,
+        meta: { authRequired: true }
+
+    },
     { path: '/login', component: Login },
     {
         path: '/dashboard',
@@ -24,7 +28,7 @@ const routes = [
         path: '/users/create',
         component: CreateUser,
         meta: { authRequired: true }
-    },
+    }
 ]
 
 const router = createRouter({
@@ -32,7 +36,7 @@ const router = createRouter({
     history: createWebHashHistory(),
 })
 router.beforeEach((to, from) => {
-    if(to.meta.authRequired && !token.value){
+    if (to.meta.authRequired && !token.value) {
         return "/login";
     }
     return true

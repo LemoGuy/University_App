@@ -3,38 +3,53 @@
 // TODO! When logining in, press enter instead of clicking login btn..
 
 
-import {token, setToken} from '../services/token'
+import { token, setToken } from '../services/token'
 
 import { ref } from 'vue'
 import backend from '../services/backend'
 import resIsOk from '../utils/resIsOk'
-import {useRouter} from 'vue-router'
+import { useRouter } from 'vue-router'
 
 const router = useRouter()
-if (token.value){
-  router.push({path: '/dashboard'})
+if (token.value) {
+  router.push({ path: '/dashboard' })
 }
 
 let credentials = ref({})
 
+let rememberMe = ref(false)
+
 async function submit() {
   let res = await backend.post('/login', credentials.value)
-  if(!resIsOk(res)){
+  if (!resIsOk(res)) {
     // error message
-    return 
+    return
   }
   setToken(res.data.token)
   router.push('/dashboard')
 }
+
+function handleLoginEntry(e) {
+  if (e.key == "Enter") {
+    submit();
+  }
+}
+
 </script>
 
 <template>
-  <div class="login-form">
+  <div class="login-form" v-on:keydown="handleLoginEntry">
     <q-card class="input-container">
       <img class='login-image' src="/images/logo.webp" alt="no pic">
       <q-input class='username' label="Username" v-model="credentials.username" />
       <q-input class='password' label="Password" v-model="credentials.password" />
-      <q-btn class="login-btn" @click="submit()">Login</q-btn>
+      <div class="login-container">
+        <q-checkbox label="Remember me" v-model="rememberMe" />
+        <q-btn class="login-btn" @click="submit()">Login</q-btn>
+        
+      </div>
+
+    <router-link to="/">Forgot Password?</router-link>
     </q-card>
 
   </div>
@@ -65,5 +80,10 @@ async function submit() {
 .login-image {
   width: 400px;
   margin-inline: auto;
+}
+
+.login-container {
+  display: flex;
+
 }
 </style>
