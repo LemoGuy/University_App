@@ -9,7 +9,7 @@ const userOptions = [
     { id: 'HeadOfDepartment', desc: 'Head of Department' },
     { id: 'Dean', desc: 'Dean of Faculty' },
     { id: 'HRManager', desc: 'HR Manager' },
-    { id: 'StudentAffiers', desc: 'Student Affiers' },
+    { id: 'StudentAffiers', desc: 'Student Affiers' }
     
     
 ]
