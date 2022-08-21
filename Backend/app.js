@@ -81,7 +81,7 @@ app.get('/test', passport.authenticate('jwt', {session: false}), (req, res) => {
   res.send('you are logged in')
 })
 
-// app.use('/addStudent', require('./routes/addStudent.js'));
+app.use('/user', require('./routes/user.js'));
 // app.use('/addLecturer', require('./routes/addLecturer.js'));
 // app.use('/addHeadOfDepartment', require('./routes/addHeadOfDepartment.js'));
 // app.use('/addHRManager', require('./routes/addHRManager.js'));

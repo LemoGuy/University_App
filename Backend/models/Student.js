@@ -7,7 +7,6 @@ const schema = new mongoose.Schema({
     department: { type: String, required: true },
     year: { type: Number, required: true },
     semester: { type: String, required: true },
-    section: { type: String, required: true },
     
     assignments: { type: [
         new mongoose.Schema({

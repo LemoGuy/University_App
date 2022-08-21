@@ -1,7 +1,18 @@
 <script setup>
 
+import { token, setToken } from '../services/token'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+
 const props = defineProps(["open"])
 defineEmits(['open'])
+
+function logout() {
+    setToken('')
+    router.push('/login')
+}
+
 </script>
 
 
@@ -14,7 +25,7 @@ defineEmits(['open'])
                 </q-avatar>
                 <div class="column">
                     <div class="text-weight-bold text-center">RazvanRazvan</div>
-                    <q-btn class="logout-btn">
+                    <q-btn class="logout-btn" @click="logout()">
                         <q-icon name="logout" />
                     </q-btn>
                 </div>
@@ -61,15 +72,7 @@ defineEmits(['open'])
 
 
 
-                    <q-item clickable v-ripple to="/users/inbox">
-                        <q-item-section avatar>
-                            <q-icon name="inbox" />
-                        </q-item-section>
-
-                        <q-item-section>
-                            Inbox
-                        </q-item-section>
-                    </q-item>
+                  
 
                 </q-expansion-item>
 
@@ -142,7 +145,7 @@ defineEmits(['open'])
                     </q-item>
 
 
-                     <q-item clickable v-ripple to="/courses/departmental_courses">
+                    <q-item clickable v-ripple to="/courses/departmental_courses">
 
                         <q-item-section avatar>
                             <q-icon name="pick" />
@@ -178,6 +181,16 @@ defineEmits(['open'])
 
                 </q-expansion-item>
 
+                  <q-item clickable v-ripple to="/users/inbox">
+                        <q-item-section avatar>
+                            <q-icon name="inbox" />
+                        </q-item-section>
+
+                        <q-item-section>
+                            Inbox
+                        </q-item-section>
+                    </q-item>
+
                 <q-item clickable v-ripple to="/courses/settings">
                     <q-item-section avatar>
                         <q-icon name="settings" />
@@ -188,7 +201,7 @@ defineEmits(['open'])
                     </q-item-section>
                 </q-item>
 
-                   <q-item clickable v-ripple to="/courses/help">
+                <q-item clickable v-ripple to="/courses/help">
                     <q-item-section avatar>
                         <q-icon name="help" />
                     </q-item-section>

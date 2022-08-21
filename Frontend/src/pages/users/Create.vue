@@ -1,17 +1,22 @@
 <script setup>
 import { ref } from 'vue';
 import Layout from '@/components/Layout.vue'
+import backend from '../../services/backend'
+import resIsOk from '../../utils/resIsOk'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
 
 const data = ref({})
 const userOptions = [
-    { id: 'Student', desc: 'Student' },
-    { id: 'Lecturer', desc: 'Leacturer' },
-    { id: 'HeadOfDepartment', desc: 'Head of Department' },
-    { id: 'Dean', desc: 'Dean of Faculty' },
-    { id: 'HRManager', desc: 'HR Manager' },
-    { id: 'StudentAffiers', desc: 'Student Affiers' }
-    
-    
+    { value: 'Student', label: 'Student' },
+    { value: 'Lecturer', label: 'Leacturer' },
+    { value: 'HeadOfDepartment', label: 'Head of Department' },
+    { value: 'Dean', label: 'Dean of Faculty' },
+    { value: 'HRManager', label: 'HR Manager' },
+    { value: 'StudentAffiers', label: 'Student Affiers' }
+
+
 ]
 
 const genders = [
@@ -19,9 +24,17 @@ const genders = [
     { label: 'Female', value: 'female' }
 ]
 
-function submit() {
+async function create() {
     console.log(data.value)
+
+    let dataEntered = await backend.post(`/user?type=${data.value.type}`, data.value)
+    if (!resIsOk(dataEntered)) {
+        // error message
+        return
+    }
+    // 
 }
+
 
 </script>
 
@@ -32,15 +45,15 @@ function submit() {
                 Create a New User Account
             </p>
             <div class="input-container">
-                <q-select outlined class='input-field' v-model='data.type' option-value="id" option-label="desc"
-                    label='User Type' :options="userOptions" />
-                <q-input outlined class="input-field" v-model="ref.fullname" label="Full Name" />
+                <q-select outlined class='input-field' v-model='data.type' label='User Type' :options="userOptions"  emit-value/>
+                <q-input outlined class="input-field" v-model="data.fullname" label="Full Name" />
                 <div class="gender-select">
                     <p>Gender:</p>
                     <q-option-group v-model="data.gender" :options="genders" color="primary" inline />
                 </div>
 
-                <q-input class='birthdate-input' outlined label='Birthdate' readonly v-model="data.birthdate" mask="date" :rules="['date']">
+                <q-input class='birthdate-input' outlined label='Birthdate' readonly v-model="data.birthdate"
+                    mask="date" :rules="['date']">
                     <template v-slot:append>
                         <q-icon name="event" class="cursor-pointer">
                             <q-popup-proxy cover transition-show="scale" transition-hide="scale">
@@ -55,17 +68,25 @@ function submit() {
                 </q-input>
 
 
-                <q-input outlined class="input-field" v-model="ref.username" label="Username" />
-                <q-input outlined class="input-field" v-model="ref.email" label="Email" />
+                <q-input outlined class="input-field" v-model="data.username" label="Username" />
+                <q-input outlined class="input-field" v-model="data.email" label="Email" />
 
                 <div class="password-container">
 
-                    <q-input outlined class="input-field" v-model="ref.password" label="Password" />
-                    <q-input outlined class="input-field" v-model="ref.password2" label="Re-write password" />
+                    <q-input outlined class="input-field" v-model="data.password" label="Password" type="password" />
+                    <q-input outlined class="input-field" v-model="data.password2" label="Re-write password"
+                        type="password" />
                 </div>
-                <q-input outlined class="input-field" v-model="ref.status" label="Status" />
+                <q-input outlined class="input-field" v-model="data.status" label="Status"/>
+
+                <q-input outlined class="input-field" v-model="data.department" label="Department" v-if="['Student', 'Lecturer', 'HeadOfDepartment'].includes(data.type)"/>
+
+                <q-input outlined class="input-field" v-model="data.year" label="Year" v-if="data.type == 'Student'"/>
+
+                <q-input outlined class="input-field" v-model="data.semester" label="Semester" v-if="data.type == 'Student'"/>
+
             </div>
-            <q-btn class='create-btn' label='Create' @click='submit()' />
+            <q-btn class='create-btn' label='Create' @click='create()' />
         </q-card>
 
     </Layout>
