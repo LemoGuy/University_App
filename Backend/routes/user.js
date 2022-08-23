@@ -7,10 +7,51 @@ const roles = require('../roles');
 const getRole = require('../roles/getRole');
 const getModel = require('../models/getModel');
 
+
+
+// get users
+router.get('/', async (req, res) => {
+    let query = {};
+    if(req.query.userId) {
+        if(req.query.userId.length > 24 ) {
+            res.sendStatus(400)
+            return
+        }
+        let startId = BigInt('0x' + req.query.userId)
+        console.log(startId)
+        if(startId === NaN ) {
+            res.sendStatus(400)
+            return
+        }
+        let endId = startId + BigInt(1)
+        startId = startId.toString(16)
+        endId = endId.toString(16)
+
+        startId = req.query.userId + "0".repeat(24 - req.query.userId.length)
+        endId = endId + "0".repeat(24 - endId.length)
+
+        query._id = {
+            $gte: startId,
+            $lt: endId
+        }
+    }
+    
+    let users = await User.find(query)
+    res.json(users)
+});
+// Todo put auth for all 
+
 // data that user did post, inside req.body 
 router.post('/', async (req, res) => {
     let data = { ...req.body }; // get the post data
     let model = getModel(req.query.type);
+
+    if (!model) {
+        res.sendStatus(400)
+        return
+    }
+
+    // global error handling later...
     
     let errors = [];
     let hash = bcrypt.hashSync(data.password, bcrypt.genSaltSync(10))

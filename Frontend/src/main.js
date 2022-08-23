@@ -5,6 +5,8 @@ import App from './App.vue'
 import Dashboard from './pages/Dashboard.vue'
 import Login from './pages/Login.vue'
 import CreateUser from '@/pages/users/Create.vue'
+import SearchUser from './pages/users/Search.vue'
+
 
 import { Quasar } from 'quasar'
 import 'quasar/src/css/index.sass'
@@ -27,6 +29,11 @@ const routes = [
     {
         path: '/users/create',
         component: CreateUser,
+        meta: { authRequired: true }
+    },
+    {
+        path: '/users/search',
+        component: SearchUser,
         meta: { authRequired: true }
     }
 ]

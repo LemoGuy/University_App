@@ -9,8 +9,11 @@
   "dependencies": {
     "@quasar/extras": "^1.15.1",
     "axios": "^0.27.2",
+    "buffer": "^6.0.3",
     "jsonwebtoken": "^8.5.1",
+    "jwt-decode": "^3.1.2",
     "quasar": "^2.7.7",
+    "util": "^0.12.4",
     "vue": "^3.2.37",
     "vue-router": "^4.1.2"
   },

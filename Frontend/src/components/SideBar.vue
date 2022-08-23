@@ -1,9 +1,11 @@
 <script setup>
-
+import jwt_decode from 'jwt-decode'
 import { token, setToken } from '../services/token'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
+
+let decodedToken = jwt_decode(token.value)
 
 const props = defineProps(["open"])
 defineEmits(['open'])
@@ -14,8 +16,6 @@ function logout() {
 }
 
 </script>
-
-
 <template>
     <q-drawer v-model="props.open" show-if-above :width="235" :breakpoint="400">
         <q-img class="absolute-top" src="https://cdn.quasar.dev/img/material.png" style="height: 200px">
@@ -24,7 +24,7 @@ function logout() {
                     <img src="https://cdn.quasar.dev/img/boy-avatar.png">
                 </q-avatar>
                 <div class="column">
-                    <div class="text-weight-bold text-center">RazvanRazvan</div>
+                    <div class="text-weight-bold text-center">{{decodedToken.sub}}</div>
                     <q-btn class="logout-btn" @click="logout()">
                         <q-icon name="logout" />
                     </q-btn>
@@ -34,8 +34,6 @@ function logout() {
         </q-img>
         <q-scroll-area style="height: calc(100% - 200px); margin-top: 200px; border-right: 1px solid #ddd">
             <q-list padding>
-
-
                 <q-item clickable v-ripple to="/dashboard">
                     <q-item-section avatar>
                         <q-icon name="home" />
@@ -45,11 +43,8 @@ function logout() {
                         Home
                     </q-item-section>
                 </q-item>
-
-
                 <q-expansion-item icon="group" label="Users" :content-inset-level="0.5">
                     <q-item clickable v-ripple to="/users/create">
-
 
                         <q-item-section avatar>
                             <q-icon name="add" />
@@ -59,7 +54,6 @@ function logout() {
                             Create
                         </q-item-section>
                     </q-item>
-
                     <q-item clickable v-ripple to="/users/search">
                         <q-item-section avatar>
                             <q-icon name="search" />
@@ -70,14 +64,30 @@ function logout() {
                         </q-item-section>
                     </q-item>
 
-
-
-                  
-
                 </q-expansion-item>
-
-
                 <q-expansion-item icon="library_books" label="Courses" :content-inset-level="0.5">
+
+                    <q-item clickable v-ripple to="/courses/create">
+
+                        <q-item-section avatar>
+                            <q-icon name="add" />
+                        </q-item-section>
+
+                        <q-item-section>
+                            Create
+                        </q-item-section>
+
+                    </q-item>
+
+                    <q-item clickable v-ripple to="/courses/search">
+                        <q-item-section avatar>
+                            <q-icon name="search" />
+                        </q-item-section>
+
+                        <q-item-section>
+                            Search
+                        </q-item-section>
+                    </q-item>
 
                     <q-expansion-item icon="list" label="My Courses" :content-inset-level="0.5">
 
@@ -157,39 +167,19 @@ function logout() {
 
                     </q-item>
 
-                    <q-item clickable v-ripple to="/courses/create">
 
-                        <q-item-section avatar>
-                            <q-icon name="add" />
-                        </q-item-section>
-
-                        <q-item-section>
-                            Create
-                        </q-item-section>
-
-                    </q-item>
-
-                    <q-item clickable v-ripple to="/courses/search">
-                        <q-item-section avatar>
-                            <q-icon name="search" />
-                        </q-item-section>
-
-                        <q-item-section>
-                            Search
-                        </q-item-section>
-                    </q-item>
 
                 </q-expansion-item>
 
-                  <q-item clickable v-ripple to="/users/inbox">
-                        <q-item-section avatar>
-                            <q-icon name="inbox" />
-                        </q-item-section>
+                <q-item clickable v-ripple to="/users/inbox">
+                    <q-item-section avatar>
+                        <q-icon name="inbox" />
+                    </q-item-section>
 
-                        <q-item-section>
-                            Inbox
-                        </q-item-section>
-                    </q-item>
+                    <q-item-section>
+                        Inbox
+                    </q-item-section>
+                </q-item>
 
                 <q-item clickable v-ripple to="/courses/settings">
                     <q-item-section avatar>

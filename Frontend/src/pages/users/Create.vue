@@ -12,9 +12,8 @@ const userOptions = [
     { value: 'Student', label: 'Student' },
     { value: 'Lecturer', label: 'Leacturer' },
     { value: 'HeadOfDepartment', label: 'Head of Department' },
-    { value: 'Dean', label: 'Dean of Faculty' },
     { value: 'HRManager', label: 'HR Manager' },
-    { value: 'StudentAffiers', label: 'Student Affiers' }
+    { value: 'StudentAffairs', label: 'Student Affiars' }
 
 
 ]
@@ -25,14 +24,14 @@ const genders = [
 ]
 
 async function create() {
-    console.log(data.value)
+    data.value.name = data.value.name.split(" ")
 
     let dataEntered = await backend.post(`/user?type=${data.value.type}`, data.value)
     if (!resIsOk(dataEntered)) {
         // error message
         return
     }
-    // 
+        router.push('/users/search')
 }
 
 
@@ -46,7 +45,7 @@ async function create() {
             </p>
             <div class="input-container">
                 <q-select outlined class='input-field' v-model='data.type' label='User Type' :options="userOptions"  emit-value/>
-                <q-input outlined class="input-field" v-model="data.fullname" label="Full Name" />
+                <q-input outlined class="input-field" v-model="data.name" label="Full Name" />
                 <div class="gender-select">
                     <p>Gender:</p>
                     <q-option-group v-model="data.gender" :options="genders" color="primary" inline />
@@ -101,7 +100,7 @@ async function create() {
 .container {
     display: flex;
     flex-direction: column;
-    margin-top: 100px;
+    margin-top: 25px;
     /* border: 1px solid grey; */
     /* border-radius: 10px; */
     padding: 50px;
