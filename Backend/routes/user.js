@@ -18,7 +18,6 @@ router.get('/', async (req, res) => {
             return
         }
         let startId = BigInt('0x' + req.query.userId)
-        console.log(startId)
         if(startId === NaN ) {
             res.sendStatus(400)
             return
@@ -55,11 +54,15 @@ router.post('/', async (req, res) => {
     
     let errors = [];
     let hash = bcrypt.hashSync(data.password, bcrypt.genSaltSync(10))
-    // res.send('hello'); // You can only send 1 send.status or string!!@!!!!!
     data['password'] = hash
     // check if user already exists
     await model.create(data); // instert into db
     res.sendStatus(200); // give OK status
 });
+
+router.delete('/:id', async (req, res) => {
+    await User.deleteOne({_id: req.params.id})
+    res.sendStatus(200)
+})
 
 module.exports = router; 

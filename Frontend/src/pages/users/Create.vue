@@ -4,24 +4,18 @@ import Layout from '@/components/Layout.vue'
 import backend from '../../services/backend'
 import resIsOk from '../../utils/resIsOk'
 import { useRouter } from 'vue-router'
+import userOptions from '../../constants/userOptions'
+import genderOptions from '../../constants/genderOptions'
+import statusOptions from '../../constants/statusOptions'
+import departmentOptions from '../../constants/departmentOptions'
+import yearOptions from '../../constants/yearOptions'
+import semesterOptions from '../../constants/semesterOptions'
+
 
 const router = useRouter()
 
 const data = ref({})
-const userOptions = [
-    { value: 'Student', label: 'Student' },
-    { value: 'Lecturer', label: 'Leacturer' },
-    { value: 'HeadOfDepartment', label: 'Head of Department' },
-    { value: 'HRManager', label: 'HR Manager' },
-    { value: 'StudentAffairs', label: 'Student Affiars' }
 
-
-]
-
-const genders = [
-    { label: 'Male', value: 'male' },
-    { label: 'Female', value: 'female' }
-]
 
 async function create() {
     data.value.name = data.value.name.split(" ")
@@ -48,7 +42,7 @@ async function create() {
                 <q-input outlined class="input-field" v-model="data.name" label="Full Name" />
                 <div class="gender-select">
                     <p>Gender:</p>
-                    <q-option-group v-model="data.gender" :options="genders" color="primary" inline />
+                    <q-option-group v-model="data.gender" :options="genderOptions" color="primary" inline />
                 </div>
 
                 <q-input class='birthdate-input' outlined label='Birthdate' readonly v-model="data.birthdate"
@@ -76,13 +70,14 @@ async function create() {
                     <q-input outlined class="input-field" v-model="data.password2" label="Re-write password"
                         type="password" />
                 </div>
-                <q-input outlined class="input-field" v-model="data.status" label="Status"/>
+                <q-select outlined class="input-field" v-model="data.status" label="Status" :options="statusOptions"  emit-value />
 
-                <q-input outlined class="input-field" v-model="data.department" label="Department" v-if="['Student', 'Lecturer', 'HeadOfDepartment'].includes(data.type)"/>
+                <q-select outlined class="input-field" v-model="data.department" label="Department" 
+                :options="departmentOptions"  emit-value v-if="['Student', 'Lecturer', 'HeadOfDepartment'].includes(data.type)"/>
 
-                <q-input outlined class="input-field" v-model="data.year" label="Year" v-if="data.type == 'Student'"/>
+                <q-select outlined class="input-field" v-model="data.year" :options="yearOptions"  emit-value label="Year" v-if="data.type == 'Student'"/>
 
-                <q-input outlined class="input-field" v-model="data.semester" label="Semester" v-if="data.type == 'Student'"/>
+                <q-select outlined class="input-field" v-model="data.semester" :options="semesterOptions"  emit-value label="Semester" v-if="data.type == 'Student'"/>
 
             </div>
             <q-btn class='create-btn' label='Create' @click='create()' />

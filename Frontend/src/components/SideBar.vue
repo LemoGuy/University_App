@@ -155,7 +155,7 @@ function logout() {
                     </q-item>
 
 
-                    <q-item clickable v-ripple to="/courses/departmental_courses">
+                    <q-item clickable v-ripple to="/courses/departmentalCourses">
 
                         <q-item-section avatar>
                             <q-icon name="pick" />
@@ -171,7 +171,7 @@ function logout() {
 
                 </q-expansion-item>
 
-                <q-item clickable v-ripple to="/users/inbox">
+                <q-item clickable v-ripple to="/inbox">
                     <q-item-section avatar>
                         <q-icon name="inbox" />
                     </q-item-section>
@@ -181,7 +181,7 @@ function logout() {
                     </q-item-section>
                 </q-item>
 
-                <q-item clickable v-ripple to="/courses/settings">
+                <q-item clickable v-ripple to="/settings">
                     <q-item-section avatar>
                         <q-icon name="settings" />
                     </q-item-section>
@@ -191,7 +191,7 @@ function logout() {
                     </q-item-section>
                 </q-item>
 
-                <q-item clickable v-ripple to="/courses/help">
+                <q-item clickable v-ripple to="/help">
                     <q-item-section avatar>
                         <q-icon name="help" />
                     </q-item-section>

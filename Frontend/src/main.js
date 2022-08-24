@@ -35,6 +35,61 @@ const routes = [
         path: '/users/search',
         component: SearchUser,
         meta: { authRequired: true }
+    },
+    {
+        path: '/courses',
+        component: Dashboard,
+        meta: { authRequired: true }
+    },
+    {
+        path: '/courses/create',
+        component: Dashboard,
+        meta: { authRequired: true }
+    },
+    {
+        path: '/courses/search',
+        component: Dashboard,
+        meta: { authRequired: true }
+    },
+    {
+        path: '/courses/take',
+        component: Dashboard,
+        meta: { authRequired: true }
+    },
+    {
+        path: '/courses/curriculum',
+        component: Dashboard,
+        meta: { authRequired: true }
+    },
+    {
+        path: '/courses/transicript',
+        component: Dashboard,
+        meta: { authRequired: true }
+    },
+    {
+        path: '/courses/departmentalCourses',
+        component: Dashboard,
+        meta: { authRequired: true }
+    },
+    {
+        path: '/inbox',
+        component: Dashboard,
+        meta: { authRequired: true }
+    },
+    {
+        path: '/settings',
+        component: Dashboard,
+        meta: { authRequired: true }
+    },
+    {
+        path: '/help',
+        component: Dashboard,
+        meta: { authRequired: true }
+    },
+    {
+        path: '/showProfile',
+        component: Dashboard,
+        meta: { authRequired: true }
     }
 ]
 
