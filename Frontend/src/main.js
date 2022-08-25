@@ -6,6 +6,7 @@ import Dashboard from './pages/Dashboard.vue'
 import Login from './pages/Login.vue'
 import CreateUser from '@/pages/users/Create.vue'
 import SearchUser from './pages/users/Search.vue'
+import ShowUser from './pages/users/Profile.vue'
 
 
 import { Quasar } from 'quasar'
@@ -87,8 +88,8 @@ const routes = [
         meta: { authRequired: true }
     },
     {
-        path: '/showProfile',
-        component: Dashboard,
+        path: '/users/id/profile',
+        component: ShowUser,
         meta: { authRequired: true }
     }
 ]

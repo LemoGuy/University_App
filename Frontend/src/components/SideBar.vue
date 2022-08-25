@@ -24,15 +24,12 @@ function logout() {
                     <img src="https://cdn.quasar.dev/img/boy-avatar.png">
                 </q-avatar>
                 <div class="column">
-                    <div class="text-weight-bold text-center">{{decodedToken.sub}}</div>
-                    <q-btn class="logout-btn" @click="logout()">
-                        <q-icon name="logout" />
-                    </q-btn>
+                    <div class="text-weight-bold text-center">{{ decodedToken.sub }}</div>
                 </div>
 
             </div>
         </q-img>
-        <q-scroll-area style="height: calc(100% - 200px); margin-top: 200px; border-right: 1px solid #ddd">
+        <q-scroll-area style="height: 400px; margin-top: 200px; border-right: 1px solid #ddd">
             <q-list padding>
                 <q-item clickable v-ripple to="/dashboard">
                     <q-item-section avatar>
@@ -202,7 +199,17 @@ function logout() {
                 </q-item>
 
             </q-list>
+
         </q-scroll-area>
+        <q-item class="absolute-bottom" clickable v-ripple @click="logout()">
+            <q-item-section avatar>
+                <q-icon name="logout" />
+            </q-item-section>
+
+            <q-item-section>
+                Logout
+            </q-item-section>
+        </q-item>
     </q-drawer>
 </template>
 

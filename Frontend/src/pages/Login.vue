@@ -42,7 +42,7 @@ function handleLoginEntry(e) {
     <q-card class="input-container">
       <img class='login-image' src="/images/logo.webp" alt="no pic">
       <q-input class='username' label="Username" v-model="credentials.username" />
-      <q-input class='password' label="Password" v-model="credentials.password" />
+      <q-input type="password" class='password' label="Password" v-model="credentials.password" />
       <div class="login-container">
         <q-checkbox label="Remember me" v-model="rememberMe" />
         <q-btn class="login-btn" @click="submit()">Login</q-btn>

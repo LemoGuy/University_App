@@ -18,7 +18,7 @@ let filters = ref({})
 
 
 const pageOptions = {
-    rowsPerPage: 10
+    rowsPerPage: 5
 }
 
 const columns = [
@@ -159,7 +159,7 @@ watch(filters, handleSearch, { deep: true })
 }
 
 .input-field-year {
-    width: 135px;
+    width: 125px;
 
 }
 </style>
