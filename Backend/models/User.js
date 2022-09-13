@@ -8,6 +8,41 @@ const schema = new mongoose.Schema({
         required: true 
     },
 
+    fatherName: { 
+        type: String, 
+        required: true 
+    },
+
+    motherName: { 
+        type: String, 
+        required: true 
+    },
+
+    phone1: { 
+        type: Number, 
+        required: true 
+    },
+
+    phone2: { 
+        type: Number, 
+        required: true 
+    },
+
+    address: { 
+        type: String, 
+        required: true 
+    },
+
+    country: { 
+        type: String, 
+        required: true 
+    },
+
+    citizenship: { 
+        type: String, 
+        required: true 
+    },
+
     gender: { 
         type: String, 
         required: true 
@@ -15,6 +50,21 @@ const schema = new mongoose.Schema({
 
     birthdate: { 
         type: Date, 
+        required: true 
+    },
+
+    maritialStatus: { 
+        type: String, 
+        required: true 
+    },
+
+    bloodType: { 
+        type: String, 
+        required: true 
+    },
+
+    religion: { 
+        type: String, 
         required: true 
     },
     

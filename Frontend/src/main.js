@@ -88,7 +88,7 @@ const routes = [
         meta: { authRequired: true }
     },
     {
-        path: '/users/id/profile',
+        path: '/users/:id/profile',
         component: ShowUser,
         meta: { authRequired: true }
     }

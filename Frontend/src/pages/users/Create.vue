@@ -10,6 +10,11 @@ import statusOptions from '../../constants/statusOptions'
 import departmentOptions from '../../constants/departmentOptions'
 import yearOptions from '../../constants/yearOptions'
 import semesterOptions from '../../constants/semesterOptions'
+import regOptions from '../../constants/regOptions'
+import countryOptions from '../../constants/countryOptions'
+import bloodTypeOptions from '../../constants/bloodTypeOptions'
+import religionOptions from '../../constants/religionOptions'
+import maritialStatusOptions from '../../constants/maritialStatusOptions'
 
 
 const router = useRouter()
@@ -25,7 +30,7 @@ async function create() {
         // error message
         return
     }
-        router.push('/users/search')
+    router.push('/users/search')
 }
 
 
@@ -38,15 +43,17 @@ async function create() {
                 Create a New User Account
             </p>
             <div class="input-container">
-                <q-select outlined class='input-field' v-model='data.type' label='User Type' :options="userOptions"  emit-value/>
+                <q-select outlined class='input-field' v-model='data.type' label='User Type' :options="userOptions"
+                    emit-value />
                 <q-input outlined class="input-field" v-model="data.name" label="Full Name" />
-                <div class="gender-select">
-                    <p>Gender:</p>
-                    <q-option-group v-model="data.gender" :options="genderOptions" color="primary" inline />
-                </div>
+                <q-input outlined class="input-field" v-model="data.fatherName" label="Father's Name" />
+                <q-input outlined class="input-field" v-model="data.motherName" label="Mother's Name" />
 
-                <q-input class='birthdate-input' outlined label='Birthdate' readonly v-model="data.birthdate"
-                    mask="date" :rules="['date']">
+                <q-select outlined class='input-field' v-model="data.gender" label='Gender' :options="genderOptions" />
+
+
+                <q-input class='birthdate-input input-field' outlined label='Birthdate' readonly
+                    v-model="data.birthdate" mask="date" :rules="['date']">
                     <template v-slot:append>
                         <q-icon name="event" class="cursor-pointer">
                             <q-popup-proxy cover transition-show="scale" transition-hide="scale">
@@ -64,20 +71,67 @@ async function create() {
                 <q-input outlined class="input-field" v-model="data.username" label="Username" />
                 <q-input outlined class="input-field" v-model="data.email" label="Email" />
 
+
+                <q-input outlined class="input-field" v-model="data.phone1" label="Phone-1" />
+
+                <q-input outlined class="input-field" v-model="data.phone2" label="Phone-2" />
+
+
+
+
+                <q-select outlined class="input-field" v-model="data.country" label="Country"
+                    :options="countryOptions" />
+
+
+                <q-input outlined class="input-field" v-model="data.citizenship" label="Citizenship" />
+
+
+                <q-select outlined class="input-field" v-model="data.maritialStatus" label="Maritial Status"
+                    :options="maritialStatusOptions" />
+
+
+                <q-select outlined class="input-field" v-model="data.bloodType" label="Blood Type"
+                    :options="bloodTypeOptions" />
+
+
+                <q-select outlined class="input-field" v-model="data.religion" label="Religion"
+                    :options="religionOptions" />
+
+
+
+
+                <q-select outlined class="input-field" v-model="data.department" label="Department"
+                    :options="departmentOptions" emit-value
+                    v-if="['Student', 'Lecturer', 'HeadOfDepartment'].includes(data.type)" />
+
+                <q-select outlined class="input-field" v-model="data.year" :options="yearOptions" emit-value
+                    label="Year" v-if="data.type == 'Student'" />
+
+                <q-select outlined class="input-field" v-model="data.registrationType" :options="regOptions" emit-value
+                    label="Registration Type" v-if="data.type == 'Student'" />
+
+                <q-input outlined class="input-field" v-model="data.prepSchool" label="Prep School"
+                    v-if="data.type == 'Student'" />
+                <q-input outlined class="input-field" v-model="data.nameOfHighSchool" label="Name of High School"
+                    v-if="data.type == 'Student'" />
+
+
+
+                <q-select outlined class="input-field" v-model="data.semester" :options="semesterOptions" emit-value
+                    label="Semester" v-if="data.type == 'Student'" />
+                <q-select outlined class="input-field" v-model="data.status" label="Status" :options="statusOptions"
+                    emit-value />
+
+                <q-input outlined class="address" v-model="data.address" label="Address" />
+
                 <div class="password-container">
 
                     <q-input outlined class="input-field" v-model="data.password" label="Password" type="password" />
                     <q-input outlined class="input-field" v-model="data.password2" label="Re-write password"
                         type="password" />
                 </div>
-                <q-select outlined class="input-field" v-model="data.status" label="Status" :options="statusOptions"  emit-value />
 
-                <q-select outlined class="input-field" v-model="data.department" label="Department" 
-                :options="departmentOptions"  emit-value v-if="['Student', 'Lecturer', 'HeadOfDepartment'].includes(data.type)"/>
-
-                <q-select outlined class="input-field" v-model="data.year" :options="yearOptions"  emit-value label="Year" v-if="data.type == 'Student'"/>
-
-                <q-select outlined class="input-field" v-model="data.semester" :options="semesterOptions"  emit-value label="Semester" v-if="data.type == 'Student'"/>
+                <q-file outlined v-model="data.photo" label="Upload Photo" class="input-field" clearable />
 
             </div>
             <q-btn class='create-btn' label='Create' @click='create()' />
@@ -88,6 +142,10 @@ async function create() {
 
 </template>
 <style scoped>
+.address {
+    width: 520px;
+}
+
 .title {
     font-size: 15pt;
 }
@@ -95,17 +153,19 @@ async function create() {
 .container {
     display: flex;
     flex-direction: column;
-    margin-top: 25px;
+
+
     /* border: 1px solid grey; */
     /* border-radius: 10px; */
-    padding: 50px;
-    width: 600px;
+    padding: 25px;
+    width: 100%;
     margin-inline: auto;
 }
 
 .input-container {
     display: flex;
-    flex-direction: column;
+    flex-wrap: wrap;
+    flex-direction: row;
     width: 100%;
     gap: 20px
 }
@@ -127,7 +187,6 @@ async function create() {
 
 .password-container {
     display: flex;
-    width: 100%;
     align-items: stretch;
     gap: 20px
 }
@@ -142,7 +201,7 @@ async function create() {
     width: 100px;
 }
 
-/* .input-field {
+.input-field {
     width: 250px;
-} */
+}
 </style>

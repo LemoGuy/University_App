@@ -11,6 +11,7 @@ const getModel = require('../models/getModel');
 
 // get users
 router.get('/', async (req, res) => {
+    // console.log(req.query.id)
     let query = {};
     if(req.query.userId) {
         if(req.query.userId.length > 24 ) {
@@ -34,10 +35,28 @@ router.get('/', async (req, res) => {
             $lt: endId
         }
     }
+
+    if (req.query.id) {
+        query._id = req.query.id
+    }
     
     let users = await User.find(query)
     res.json(users)
 });
+
+// get data from db
+router.get('/:user_id', async (req,res) => {
+
+})
+
+// update data and remove old one directly
+router.put('/:user_id', async (req, res) => {
+
+})
+
+
+
+
 // Todo put auth for all 
 
 // data that user did post, inside req.body 

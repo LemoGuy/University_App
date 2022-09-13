@@ -18,13 +18,13 @@ function logout() {
 </script>
 <template>
     <q-drawer v-model="props.open" show-if-above :width="235" :breakpoint="400">
-        <q-img class="absolute-top" src="https://cdn.quasar.dev/img/material.png" style="height: 200px">
+        <q-img class="absolute-top" src="../../public/images/bg-logo.png" style="height: 200px">
             <div class="absolute-top  bg-transparent">
-                <q-avatar size="100px" class="row q-ml-auto q-mr-auto">
-                    <img src="https://cdn.quasar.dev/img/boy-avatar.png">
+                <q-avatar size="150px" class="row q-ml-auto q-mr-auto">
+                    <img style="background-color: white;" src="../../public/images/jobs.webp">
                 </q-avatar>
                 <div class="column">
-                    <div class="text-weight-bold text-center">{{ decodedToken.sub }}</div>
+                    <div style="background-color: white;" class="text-weight-bold text-center text-black username">{{ decodedToken.sub }}</div>
                 </div>
 
             </div>
@@ -218,4 +218,6 @@ function logout() {
     margin-left: auto;
     margin-top: auto;
 }
+
+
 </style>

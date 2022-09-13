@@ -3,7 +3,10 @@ const User = require('../models/User')
 
 
 const schema = new mongoose.Schema({
-    
+
+    nameOfHighSchool: { type: String, required: true },
+    prepSchool: { type: String, required: true },
+    registrationType: { type: String, required: true },
     department: { type: String, required: true },
     year: { type: Number, required: true },
     semester: { type: String, required: true },

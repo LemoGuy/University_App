@@ -1,5 +1,29 @@
 <script setup>
 import Layout from '../../components/Layout.vue'
+import { useRoute } from 'vue-router';
+import { ref, onMounted } from 'vue'
+import backend from '../../services/backend';
+
+const route = useRoute();
+console.log(route.params.id)
+
+const data = ref({})
+
+onMounted(async () => {
+
+    //get data from db, save in state
+    let response = await backend.get("/user?id=" + route.params.id)
+
+    if (response.status === 200) {
+        data.value = response.data[0]
+        //todo better one 
+    }
+
+})
+
+
+
+
 </script>
 
 <template>
@@ -7,12 +31,18 @@ import Layout from '../../components/Layout.vue'
     <Layout>
         <q-card class="filter-container">
             <div class="profile-picture">
-                <q-img src="https://cdn.quasar.dev/img/boy-avatar.png"></q-img>
+                <q-img src="../../../public/images/jobs.webp"></q-img>
             </div>
 
             <div class="width">
-                <div class="profile-info-1">
-                    <p class="text-h5 text-bold text-weight-thin">Abdulla Hasan</p>
+                <div class="profile-info-1" >
+                    <div class="full-name">
+                        <p class="text-h5 text-bold text-weight-thin " v-for="name in data.name" :key="name">
+                            {{ name }}
+                        </p>
+
+                    </div>
+
                     <p class="text-subtitle2 text-bold text-primary">Student</p>
                 </div>
                 <div class="contact-info text-uppercase text-overline text-weight-light text-grey-14">
@@ -29,15 +59,15 @@ import Layout from '../../components/Layout.vue'
                                 <p class="text-subtitle2 text-bold">User ID:</p>
                             </div>
                             <div class="col">
-                                <p class="text-subtitle2 text-primary">121116348</p>
+                                <p class="text-subtitle2 text-primary">{{data._id}}</p>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col">
-                                <p class="text-subtitle2 text-bold">Full Name:</p>
+                                <p class="text-subtitle2 text-bold" >Full Name:</p>
                             </div>
-                            <div class="col">
-                                <p class="text-subtitle2 ">Abdullah Hasan Azbah</p>
+                            <div class="col full-name">
+                                <p class="text-subtitle2 " v-for="name in data.name" :key="name">{{name}}</p>
                             </div>
                         </div>
                         <div class="row">
@@ -45,7 +75,7 @@ import Layout from '../../components/Layout.vue'
                                 <p class="text-subtitle2 text-bold">Department:</p>
                             </div>
                             <div class="col">
-                                <p class="text-subtitle2">Civil Engineering</p>
+                                <p class="text-subtitle2">{{data.department}}</p>
                             </div>
                         </div>
                         <div class="row">
@@ -53,7 +83,7 @@ import Layout from '../../components/Layout.vue'
                                 <p class="text-subtitle2 text-bold">Status:</p>
                             </div>
                             <div class="col">
-                                <p class="text-subtitle2 text-primary">Graduated</p>
+                                <p class="text-subtitle2 text-primary">{{data.status}}</p>
                             </div>
                         </div>
 
@@ -62,7 +92,7 @@ import Layout from '../../components/Layout.vue'
                                 <p class="text-subtitle2 text-bold">Registration Year:</p>
                             </div>
                             <div class="col">
-                                <p class="text-subtitle2">2016</p>
+                                <p class="text-subtitle2">{{data.year}}</p>
                             </div>
                         </div>
 
@@ -71,7 +101,7 @@ import Layout from '../../components/Layout.vue'
                                 <p class="text-subtitle2 text-bold">Registration Type:</p>
                             </div>
                             <div class="col">
-                                <p class="text-subtitle2">Ministry Exam</p>
+                                <p class="text-subtitle2">{{data.registrationType}}</p>
                             </div>
                         </div>
 
@@ -80,7 +110,7 @@ import Layout from '../../components/Layout.vue'
                                 <p class="text-subtitle2 text-bold">Prep School:</p>
                             </div>
                             <div class="col">
-                                <p class="text-subtitle2">English, A</p>
+                                <p class="text-subtitle2">{{data.prepSchool}}</p>
                             </div>
                         </div>
 
@@ -89,7 +119,7 @@ import Layout from '../../components/Layout.vue'
                                 <p class="text-subtitle2 text-bold">Name of High School:</p>
                             </div>
                             <div class="col">
-                                <p class="text-subtitle2">Al Akhoua</p>
+                                <p class="text-subtitle2">{{data.nameOfHighSchool}}</p>
                             </div>
                         </div>
 
@@ -109,7 +139,7 @@ import Layout from '../../components/Layout.vue'
                                 <p class="text-subtitle2 text-bold">Fathers's Name:</p>
                             </div>
                             <div class="col">
-                                <p class="text-subtitle2">Hasan Azbah</p>
+                                <p class="text-subtitle2">{{data.fatherName}}</p>
                             </div>
                         </div>
 
@@ -118,7 +148,7 @@ import Layout from '../../components/Layout.vue'
                                 <p class="text-subtitle2 text-bold">Mother's Name:</p>
                             </div>
                             <div class="col">
-                                <p class="text-subtitle2">Mother's Name</p>
+                                <p class="text-subtitle2">{{data.motherName}}</p>
                             </div>
                         </div>
                     </div>
@@ -143,7 +173,7 @@ import Layout from '../../components/Layout.vue'
                                 <p class="text-subtitle2 text-bold">Phone-1:</p>
                             </div>
                             <div class="col">
-                                <p class="text-subtitle2 text-primary">+1 123 456 7890</p>
+                                <p class="text-subtitle2 text-primary">{{data.phone1}}</p>
                             </div>
                         </div>
 
@@ -152,7 +182,7 @@ import Layout from '../../components/Layout.vue'
                                 <p class="text-subtitle2 text-bold">Phone-2:</p>
                             </div>
                             <div class="col">
-                                <p class="text-subtitle2 text-primary">+1 123 456 7890</p>
+                                <p class="text-subtitle2 text-primary">{{data.phone2}}</p>
                             </div>
                         </div>
                         <div class="row">
@@ -160,7 +190,7 @@ import Layout from '../../components/Layout.vue'
                                 <p class="text-subtitle2 text-bold">Address:</p>
                             </div>
                             <div class="col">
-                                <p class="text-subtitle2">Zürafa St.Müeyyedzade, 34425 Beyoğlu/İstanbul, Turkey
+                                <p class="text-subtitle2">{{data.address}}
                                 </p>
                             </div>
                         </div>
@@ -169,7 +199,7 @@ import Layout from '../../components/Layout.vue'
                                 <p class="text-subtitle2 text-bold">Email:</p>
                             </div>
                             <div class="col">
-                                <p class="text-subtitle2 text-primary">abdulla060@gmail.com</p>
+                                <p class="text-subtitle2 text-primary">{{data.email}}</p>
                             </div>
                         </div>
                     </div>
@@ -189,7 +219,7 @@ import Layout from '../../components/Layout.vue'
                                 <p class="text-subtitle2 text-bold">Country:</p>
                             </div>
                             <div class="col">
-                                <p class="text-subtitle2">Iraq</p>
+                                <p class="text-subtitle2">{{data.country}}</p>
                             </div>
                         </div>
 
@@ -199,7 +229,7 @@ import Layout from '../../components/Layout.vue'
                                 <p class="text-subtitle2 text-bold">Citizenship:</p>
                             </div>
                             <div class="col">
-                                <p class="text-subtitle2">Iraqi</p>
+                                <p class="text-subtitle2">{{data.citizenship}}</p>
                             </div>
                         </div>
 
@@ -208,7 +238,7 @@ import Layout from '../../components/Layout.vue'
                                 <p class="text-subtitle2 text-bold">Birthday:</p>
                             </div>
                             <div class="col">
-                                <p class="text-subtitle2 text-primary">June 5, 1998</p>
+                                <p class="text-subtitle2 text-primary">{{data.birthdate}}</p>
                             </div>
                         </div>
                         <div class="row">
@@ -216,7 +246,7 @@ import Layout from '../../components/Layout.vue'
                                 <p class="text-subtitle2 text-bold">Gender:</p>
                             </div>
                             <div class="col">
-                                <p class="text-subtitle2">Male</p>
+                                <p class="text-subtitle2">{{data.gender}}</p>
                             </div>
                         </div>
 
@@ -225,7 +255,7 @@ import Layout from '../../components/Layout.vue'
                                 <p class="text-subtitle2 text-bold">Maritial Status</p>
                             </div>
                             <div class="col">
-                                <p class="text-subtitle2">Zeta Male (zeva)</p>
+                                <p class="text-subtitle2">{{data.maritialStatus}}</p>
                             </div>
                         </div>
 
@@ -234,7 +264,7 @@ import Layout from '../../components/Layout.vue'
                                 <p class="text-subtitle2 text-bold">Blood Type:</p>
                             </div>
                             <div class="col">
-                                <p class="text-subtitle2">O Rh+</p>
+                                <p class="text-subtitle2">{{data.bloodType}}</p>
                             </div>
                         </div>
 
@@ -243,7 +273,7 @@ import Layout from '../../components/Layout.vue'
                                 <p class="text-subtitle2 text-bold">Religion:</p>
                             </div>
                             <div class="col">
-                                <p class="text-subtitle2">Jewish</p>
+                                <p class="text-subtitle2">{{data.religion}}</p>
                             </div>
                         </div>
 
@@ -266,6 +296,14 @@ import Layout from '../../components/Layout.vue'
 </template>
 
 <style scoped>
+.full-name {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    gap:1ch;
+
+}
+
 .profile-picture {
     height: 200px;
     width: 200px;
